@@ -42,13 +42,13 @@ const WeeklyScheduleForm = () => {
     };
 
     return (
-        <div className="max-w-4xl mx-auto mt-10">
+        <section className="flex flex-col items-center lg:w-[1280px] min-h-screen  mx-auto py-10">
             <form
                 onSubmit={handleSubmit(onSubmit)}
-                className="space-y-6 bg-white p-8 rounded-lg shadow"
+                className="space-y-6 w-full"
             >
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                    Update Weekly Schedule
+                    Update your weekly block time slots
                 </h2>
                 {fields.map((field, dayIndex) => (
                     <div key={field.id} className="space-y-4">
@@ -72,7 +72,7 @@ const WeeklyScheduleForm = () => {
                                         {...register(
                                             `weeklySchedule.${dayIndex}.timeBlocks.${blockIndex}.startTime`
                                         )}
-                                        className="input w-full border-gray-300 rounded-md shadow-sm"
+                                        className="w-full border-gray-300 rounded-md shadow-sm"
                                         type="time"
                                         placeholder="Start Time"
                                     />
@@ -80,7 +80,7 @@ const WeeklyScheduleForm = () => {
                                         {...register(
                                             `weeklySchedule.${dayIndex}.timeBlocks.${blockIndex}.endTime`
                                         )}
-                                        className="input w-full border-gray-300 rounded-md shadow-sm"
+                                        className="w-full border-gray-300 rounded-md shadow-sm"
                                         type="time"
                                         placeholder="End Time"
                                     />
@@ -88,7 +88,7 @@ const WeeklyScheduleForm = () => {
                                         {...register(
                                             `weeklySchedule.${dayIndex}.timeBlocks.${blockIndex}.subject`
                                         )}
-                                        className="input w-full border-gray-300 rounded-md shadow-sm"
+                                        className="w-full border-gray-300 rounded-md shadow-sm"
                                         placeholder="Subject"
                                     />
                                     <button
@@ -99,7 +99,7 @@ const WeeklyScheduleForm = () => {
                                                 blockIndex
                                             )
                                         }
-                                        className="btn bg-red-500 hover:bg-red-700 text-white rounded-md"
+                                        className="bg-red-500 hover:bg-red-700 text-white rounded-md py-2"
                                     >
                                         Remove
                                     </button>
@@ -109,7 +109,7 @@ const WeeklyScheduleForm = () => {
                         <button
                             type="button"
                             onClick={() => addTimeBlock(dayIndex)}
-                            className="btn bg-blue-500 hover:bg-blue-700 text-white rounded-md"
+                            className="btn bg-blue-500 hover:bg-blue-700 text-white rounded-md p-2"
                         >
                             Add Time Block
                         </button>
@@ -117,11 +117,11 @@ const WeeklyScheduleForm = () => {
                 ))}
                 <input
                     type="submit"
-                    className="btn bg-green-500 hover:bg-green-700 text-white rounded-md cursor-pointer"
+                    className="bg-green-500 hover:bg-green-700 text-white rounded-md cursor-pointer p-2"
                     value="Update Schedule"
                 />
             </form>
-        </div>
+        </section>
     );
 };
 
