@@ -3,17 +3,27 @@ import { createSlice } from "@reduxjs/toolkit";
 export const scheduleSlice = createSlice({
     name: "schedule",
     initialState: {
+        weeklySchedule: [],
         loading: false,
-        // Define other local state as needed
+        error: null,
     },
     reducers: {
+        setWeeklySchedule: (state, action) => {
+            state.weeklySchedule = action.payload;
+        },
+        clearWeeklySchedule: (state) => {
+            state.weeklySchedule = [];
+        },
         setLoading: (state, action) => {
             state.loading = action.payload;
         },
-        // Add other reducers as necessary
+        setError: (state, action) => {
+            state.error = action.payload;
+        },
     },
 });
 
-export const { setLoading } = scheduleSlice.actions;
+export const { setWeeklySchedule, clearWeeklySchedule, setLoading, setError } =
+    scheduleSlice.actions;
 
 export default scheduleSlice.reducer;

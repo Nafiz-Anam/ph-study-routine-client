@@ -1,5 +1,9 @@
 "use client";
 
+import {
+    useAddInitialScheduleMutation,
+    useGetInitialScheduleQuery,
+} from "@/redux/services/scheduleApi";
 import React from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 
@@ -18,8 +22,23 @@ const WeeklyScheduleForm = () => {
         },
     });
     const { fields } = useFieldArray({ control, name: "weeklySchedule" });
+    const { data: scheduleData, isSuccess } = useGetInitialScheduleQuery();
+    const [addInitialSchedule] = useAddInitialScheduleMutation();
 
-    const onSubmit = (data) => console.log(data);
+    useEffect(() => {
+        if (isSuccess && scheduleData) {
+            reset({ weeklySchedule: scheduleData.weeklySchedule });
+        }
+    }, [isSuccess, scheduleData]);
+
+    const onSubmit = async (data) => {
+        try {
+            await addInitialSchedule(data).unwrap();
+            console.log("Schedule updated successfully");
+        } catch (error) {
+            console.error("Failed to update the schedule:", error);
+        }
+    };
 
     const addTimeBlock = (dayIndex) => {
         const newTimeBlock = {
