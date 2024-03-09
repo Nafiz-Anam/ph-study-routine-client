@@ -1,5 +1,8 @@
 "use client";
 
+import { useAppDispatch } from "@/hooks/reduxHooks";
+import { setCredentials } from "@/redux/features/authSlice";
+import { useLoginUserMutation } from "@/redux/services/authApi";
 import { useForm } from "react-hook-form";
 
 const LoginForm = () => {
@@ -8,8 +11,18 @@ const LoginForm = () => {
         handleSubmit,
         formState: { errors },
     } = useForm();
-    const onSubmit = (data) => console.log(data);
     console.log("errors =>", errors);
+    const [loginUser] = useLoginUserMutation();
+    const dispatch = useAppDispatch();
+
+    const onSubmit = async (data) => {
+        try {
+            const user = await loginUser(data).unwrap();
+            dispatch(setCredentials({ ...user, email: data.email }));
+        } catch (err) {
+            console.error("Login failed:", err);
+        }
+    };
 
     return (
         <section className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">

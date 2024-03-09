@@ -1,5 +1,8 @@
 "use client";
 
+import { useAppDispatch } from "@/hooks/reduxHooks";
+import { setCredentials } from "@/redux/features/authSlice";
+import { useRegisterUserMutation } from "@/redux/services/authApi";
 import { useForm } from "react-hook-form";
 
 const RegisterForm = () => {
@@ -8,8 +11,20 @@ const RegisterForm = () => {
         handleSubmit,
         formState: { errors },
     } = useForm();
-    const onSubmit = (data) => console.log(data);
     console.log("errors =>", errors);
+
+    const [registerUser] = useRegisterUserMutation();
+    const dispatch = useAppDispatch();
+
+    const onSubmit = async (data) => {
+        try {
+            const result = await registerUser(data).unwrap();
+            dispatch(setCredentials(result));
+            console.log("User registered successfully");
+        } catch (err) {
+            console.error("Error registering the user: ", err);
+        }
+    };
 
     return (
         <section className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
