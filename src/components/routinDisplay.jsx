@@ -1,4 +1,11 @@
-const RoutineDisplay = ({ studyPlan }) => {
+"use client";
+
+import React from "react";
+import { useGetStudyPlanQuery } from "@/redux/services/userApi";
+
+const RoutineDisplay = () => {
+    const { data: studyPlan, error, isLoading } = useGetStudyPlanQuery();
+
     const daysOfWeek = [
         "Monday",
         "Tuesday",
@@ -8,6 +15,9 @@ const RoutineDisplay = ({ studyPlan }) => {
         "Saturday",
         "Sunday",
     ];
+
+    if (isLoading) return <div>Loading...</div>;
+    if (error) return <div>An error occurred: {error.toString()}</div>;
 
     return (
         <section className="flex flex-col items-center min-h-screen mx-auto py-10 max-w-7xl sm:px-6 lg:px-8">
@@ -26,10 +36,10 @@ const RoutineDisplay = ({ studyPlan }) => {
                             </h3>
                         </div>
                         <div className="border-t border-gray-200">
-                            {studyPlan[day]?.length > 0 ? (
-                                studyPlan[day].map((task, index) => (
+                            {studyPlan.studyPlan[day]?.length > 0 ? (
+                                studyPlan.studyPlan[day].map((task, index) => (
                                     <div
-                                        key={task._id}
+                                        key={index}
                                         className={`px-4 py-5 ${
                                             index % 2 === 0
                                                 ? "bg-gray-50"
@@ -56,8 +66,8 @@ const RoutineDisplay = ({ studyPlan }) => {
                         </div>
                     </div>
                 ))}
-                {studyPlan.unallocatedTasks &&
-                    studyPlan.unallocatedTasks.length > 0 && (
+                {studyPlan.studyPlan.unallocatedTasks &&
+                    studyPlan.studyPlan.unallocatedTasks.length > 0 && (
                         <div className="col-span-full bg-white shadow overflow-hidden sm:rounded-lg">
                             <div className="px-4 py-5 sm:px-6 bg-red-500 text-white">
                                 <h3 className="text-lg leading-6 font-medium">
@@ -65,10 +75,10 @@ const RoutineDisplay = ({ studyPlan }) => {
                                 </h3>
                             </div>
                             <div className="border-t border-gray-200">
-                                {studyPlan.unallocatedTasks.map(
+                                {studyPlan.studyPlan.unallocatedTasks.map(
                                     (task, index) => (
                                         <div
-                                            key={task._id}
+                                            key={index}
                                             className={`px-4 py-5 ${
                                                 index % 2 === 0
                                                     ? "bg-gray-50"

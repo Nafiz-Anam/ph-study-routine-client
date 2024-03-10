@@ -25,8 +25,6 @@ const UpdateNeedsForm = () => {
     const [addUserNeeds] = useAddUserNeedsMutation();
     const { data: needsData, isSuccess } = useGetUserNeedsQuery();
 
-    console.log(needsData);
-
     useEffect(() => {
         if (isSuccess && needsData && needsData.needs) {
             reset({ needs: needsData.needs });
