@@ -5,6 +5,8 @@ import { setCredentials } from "@/redux/features/authSlice";
 import { useLoginUserMutation } from "@/redux/services/authApi";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const LoginForm = () => {
     const {
@@ -15,13 +17,17 @@ const LoginForm = () => {
     console.log("errors =>", errors);
     const [loginUser] = useLoginUserMutation();
     const dispatch = useAppDispatch();
+    const router = useRouter();
 
     const onSubmit = async (data) => {
         try {
             const user = await loginUser(data).unwrap();
             dispatch(setCredentials({ ...user, email: data.email }));
+            toast.success("Logged in successfully.");
+            router.push("/");
         } catch (err) {
             console.error("Login failed:", err);
+            toast.error("Failed to login.");
         }
     };
 

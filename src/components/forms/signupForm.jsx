@@ -5,6 +5,8 @@ import { setCredentials } from "@/redux/features/authSlice";
 import { useRegisterUserMutation } from "@/redux/services/authApi";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const RegisterForm = () => {
     const {
@@ -16,14 +18,18 @@ const RegisterForm = () => {
 
     const [registerUser] = useRegisterUserMutation();
     const dispatch = useAppDispatch();
+    const router = useRouter();
 
     const onSubmit = async (data) => {
         try {
             const result = await registerUser(data).unwrap();
             dispatch(setCredentials(result));
+            toast.success("User signed up Successfully");
+            router.push("/");
             console.log("User registered successfully");
         } catch (err) {
             console.error("Error registering the user: ", err);
+            toast.error("Failed to sign up.");
         }
     };
 
