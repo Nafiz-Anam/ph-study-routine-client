@@ -7,6 +7,7 @@ import {
 import React, { useEffect } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import toast from "react-hot-toast";
+import { FaPlus } from "react-icons/fa";
 
 const WeeklyScheduleForm = () => {
     const { register, control, handleSubmit, watch, setValue, reset } = useForm(
@@ -133,15 +134,15 @@ const WeeklyScheduleForm = () => {
                         <button
                             type="button"
                             onClick={() => addTimeBlock(dayIndex)}
-                            className="btn bg-blue-500 hover:bg-blue-700 text-white rounded-md p-2"
+                            className="bg-slate-700 hover:bg-slate-900 text-sm text-white rounded-md p-2 flex justify-center items-center gap-1"
                         >
-                            Add Time Block
+                            <FaPlus /> Add New
                         </button>
                     </div>
                 ))}
                 <input
                     type="submit"
-                    className="bg-green-500 hover:bg-green-700 text-white rounded-md cursor-pointer p-2"
+                    className="bg-indigo-500 hover:bg-indigo-700 text-white rounded-md cursor-pointer p-2"
                     value="Update Schedule"
                 />
             </form>
