@@ -2,6 +2,8 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import StoreProvider from "./StoreProvider";
 import { Toaster } from "react-hot-toast";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,8 +17,10 @@ export default function RootLayout({ children }) {
         <html lang="en" className="h-full">
             <body className={inter.className}>
                 <main className="h-[100vh] bg-white">
+                    <Navbar />
                     <Toaster />
                     <StoreProvider>{children}</StoreProvider>
+                    <Footer />
                 </main>
             </body>
         </html>

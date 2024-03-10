@@ -25,6 +25,9 @@ const LoginForm = () => {
             dispatch(setCredentials({ ...user, email: data.email }));
             toast.success("Logged in successfully.");
             router.push("/");
+            setTimeout(() => {
+                window.location.reload();
+            }, 500);
         } catch (err) {
             console.error("Login failed:", err);
             toast.error("Failed to login.");

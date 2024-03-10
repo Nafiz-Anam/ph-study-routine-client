@@ -4,23 +4,25 @@ import {
     useAddInitialScheduleMutation,
     useGetInitialScheduleQuery,
 } from "@/redux/services/scheduleApi";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 
 const WeeklyScheduleForm = () => {
-    const { register, control, handleSubmit, watch, setValue } = useForm({
-        defaultValues: {
-            weeklySchedule: [
-                { day: "Monday", timeBlocks: [] },
-                { day: "Tuesday", timeBlocks: [] },
-                { day: "Wednesday", timeBlocks: [] },
-                { day: "Thursday", timeBlocks: [] },
-                { day: "Friday", timeBlocks: [] },
-                { day: "Saturday", timeBlocks: [] },
-                { day: "Sunday", timeBlocks: [] },
-            ],
-        },
-    });
+    const { register, control, handleSubmit, watch, setValue, reset } = useForm(
+        {
+            defaultValues: {
+                weeklySchedule: [
+                    { day: "Monday", timeBlocks: [] },
+                    { day: "Tuesday", timeBlocks: [] },
+                    { day: "Wednesday", timeBlocks: [] },
+                    { day: "Thursday", timeBlocks: [] },
+                    { day: "Friday", timeBlocks: [] },
+                    { day: "Saturday", timeBlocks: [] },
+                    { day: "Sunday", timeBlocks: [] },
+                ],
+            },
+        }
+    );
     const { fields } = useFieldArray({ control, name: "weeklySchedule" });
     const { data: scheduleData, isSuccess } = useGetInitialScheduleQuery();
     const [addInitialSchedule] = useAddInitialScheduleMutation();
