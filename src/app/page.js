@@ -3,25 +3,29 @@ import {
     TbHexagonNumber2,
     TbHexagonNumber3,
 } from "react-icons/tb";
+import Link from "next/link";
 
 export default function Home() {
     return (
-        <div className="flex flex-col min-h-screen overflow-hidden">
+        <section className="flex flex-col min-h-screen overflow-hidden">
             {/* Hero Section */}
-            <section className="text-center py-24 bg-indigo-600 text-white">
+            <div className="text-center py-24 bg-indigo-600 text-white">
                 <h1 className="text-5xl font-bold">
                     Master Your Study Routine
                 </h1>
-                <p className="mt-4 text-xl">
+                <p className="mt-4 mb-8 text-xl">
                     Plan, prioritize, and achieve your academic goals with ease.
                 </p>
-                <button className="mt-8 px-6 py-2 bg-white text-indigo-600 rounded-md font-semibold shadow">
+                <Link
+                    href="/signup"
+                    className="px-6 py-2 bg-white text-indigo-600 rounded-md font-semibold shadow"
+                >
                     Get Started for Free
-                </button>
-            </section>
+                </Link>
+            </div>
 
             {/* Features Section */}
-            <section className="py-24 bg-gray-50">
+            <div className="py-24 bg-gray-50">
                 <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
                     <div className="flex flex-col items-center">
                         <div className="p-6 rounded-full bg-indigo-100 text-5xl">
@@ -62,21 +66,24 @@ export default function Home() {
                         </p>
                     </div>
                 </div>
-            </section>
+            </div>
 
             {/* Call to Action Section */}
-            <section className="bg-indigo-600 text-white text-center py-24">
+            <div className="bg-indigo-600 text-white text-center py-24">
                 <h2 className="text-3xl font-bold">
                     Join Our Community of Achievers
                 </h2>
-                <p className="mt-4 max-w-xl mx-auto">
+                <p className="mt-4 mb-6 max-w-xl mx-auto">
                     Sign up now to start optimizing your study routine and take
                     the first step towards academic success.
                 </p>
-                <button className="mt-8 px-6 py-2 border border-white rounded-md font-semibold shadow-lg">
+                <Link
+                    href="/signup"
+                    className="px-6 py-2 border border-white rounded-md font-semibold shadow-lg"
+                >
                     Sign Up Now
-                </button>
-            </section>
-        </div>
+                </Link>
+            </div>
+        </section>
     );
 }
