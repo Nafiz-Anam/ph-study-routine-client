@@ -6,6 +6,7 @@ import {
 } from "@/redux/services/scheduleApi";
 import React, { useEffect } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
+import toast from "react-hot-toast";
 
 const WeeklyScheduleForm = () => {
     const { register, control, handleSubmit, watch, setValue, reset } = useForm(
