@@ -34,6 +34,9 @@ export const userApi = createApi({
                 body: needsData,
             }),
         }),
+        getUserNeeds: builder.query({
+            query: () => "/user/needs",
+        }),
         getStudyPlan: builder.query({
             query: () => "/user/study-plan",
         }),
@@ -44,5 +47,6 @@ export const {
     useGetUserProfileQuery,
     useUpdateUserProfileMutation,
     useAddUserNeedsMutation,
+    useGetUserNeedsQuery,
     useGetStudyPlanQuery,
 } = userApi;
