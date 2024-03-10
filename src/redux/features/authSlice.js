@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import Cookies from "js-cookie";
 
 export const authSlice = createSlice({
     name: "auth",
@@ -15,12 +16,14 @@ export const authSlice = createSlice({
             state.user = { id, email };
             state.token = token;
             localStorage.setItem("token", token);
+            Cookies.set("token", token, { expires: 7 });
         },
         logout: (state) => {
             state.isAuthenticated = false;
             state.user = null;
             state.token = null;
             localStorage.removeItem("token");
+            Cookies.remove("token");
         },
     },
 });
