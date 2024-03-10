@@ -26,7 +26,11 @@ const WeeklyScheduleForm = () => {
         }
     );
     const { fields } = useFieldArray({ control, name: "weeklySchedule" });
-    const { data: scheduleData, isSuccess } = useGetInitialScheduleQuery();
+    const {
+        data: scheduleData,
+        isSuccess,
+        refetch,
+    } = useGetInitialScheduleQuery();
     const [addInitialSchedule] = useAddInitialScheduleMutation();
 
     useEffect(() => {
@@ -37,12 +41,20 @@ const WeeklyScheduleForm = () => {
 
     const onSubmit = async (data) => {
         try {
-            await addInitialSchedule(data).unwrap();
+            await addInitialSchedule(data)
+                .unwrap()
+                .then(() => {
+                    toast.success("Schedule updated successfully.");
+                    refetch();
+                })
+                .catch((error) => {
+                    toast.error("Failed to update the schedule.");
+                    console.error("Failed to update the schedule:", error);
+                });
             console.log("Schedule updated successfully");
-            toast.success("Schedule updated successfully.");
         } catch (error) {
             console.error("Failed to update the schedule:", error);
-            toast.success("Failed to update the schedule.");
+            toast.error("Failed to update the schedule.");
         }
     };
 
@@ -86,13 +98,20 @@ const WeeklyScheduleForm = () => {
                                     key={blockIndex}
                                     className="grid grid-cols-1 md:grid-cols-5 gap-4 items-center"
                                 >
-                                    <input
+                                    <select
                                         {...register(
                                             `weeklySchedule.${dayIndex}.timeBlocks.${blockIndex}.reason`
                                         )}
-                                        className="input w-full border-gray-300 rounded-md shadow-sm"
-                                        placeholder="Reason"
-                                    />
+                                        className="block mt-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    >
+                                        <option value="" disabled>
+                                            Select Reason
+                                        </option>
+                                        <option value="other">Other</option>
+                                        <option value="work">Work</option>
+                                        <option value="class">Class</option>
+                                        <option value="study">Study</option>
+                                    </select>
                                     <input
                                         {...register(
                                             `weeklySchedule.${dayIndex}.timeBlocks.${blockIndex}.startTime`

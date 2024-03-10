@@ -10,7 +10,12 @@ import toast from "react-hot-toast";
 import ImageUploader from "../imageUploader";
 
 const ProfileForm = () => {
-    const { data: userProfile, error, isLoading } = useGetUserProfileQuery();
+    const {
+        data: userProfile,
+        error,
+        isLoading,
+        refetch,
+    } = useGetUserProfileQuery();
     const [updateUserProfile, { isLoading: isUpdating }] =
         useUpdateUserProfileMutation();
     const {
@@ -51,16 +56,27 @@ const ProfileForm = () => {
         });
         if (selectedImage) {
             formData.append("profilePicture", selectedImage);
+        } else {
+            formData.append(
+                "profilePicture",
+                userProfile?.profile.profilePicture
+            );
         }
 
         try {
-            await updateUserProfile(formData);
-
-            if (!isUpdating) {
-                toast.success("Profile updated successfully.");
-            }
+            await updateUserProfile(formData)
+                .unwrap()
+                .then(() => {
+                    toast.success("Profile updated successfully.");
+                    refetch();
+                })
+                .catch((error) => {
+                    toast.error("Failed to update profile.");
+                    console.error("Update failed", error);
+                });
         } catch (error) {
             toast.error("Failed to update profile.");
+            console.error("Update failed", error);
         }
     };
 

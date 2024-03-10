@@ -23,7 +23,7 @@ const UpdateNeedsForm = () => {
     });
 
     const [addUserNeeds] = useAddUserNeedsMutation();
-    const { data: needsData, isSuccess } = useGetUserNeedsQuery();
+    const { data: needsData, isSuccess, refetch } = useGetUserNeedsQuery();
 
     useEffect(() => {
         if (isSuccess && needsData && needsData.needs) {
@@ -33,8 +33,16 @@ const UpdateNeedsForm = () => {
 
     const onSubmit = async (data) => {
         try {
-            await addUserNeeds(data).unwrap();
-            toast.success("Needs updated successfully");
+            await addUserNeeds(data)
+                .unwrap()
+                .then(() => {
+                    toast.success("Needs updated successfully");
+                    refetch();
+                })
+                .catch((error) => {
+                    toast.error("Failed to update needs.");
+                    console.error("Failed to update needs", error);
+                });
         } catch (err) {
             console.error("Failed to update needs:", err);
             toast.error("Failed to update needs.");

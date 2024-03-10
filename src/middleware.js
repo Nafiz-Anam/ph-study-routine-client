@@ -15,8 +15,18 @@ const parseCookies = (request) => {
 export function middleware(request) {
     const cookies = parseCookies(request);
     const token = cookies.token;
+    const { pathname } = request.nextUrl;
 
-    if (!token) {
+    // Pages that should be accessible only when NOT logged in
+    const publicOnlyPages = ["/signup", "/signin"];
+
+    // If the user tries to access a public only page while logged in, redirect them to their profile page
+    if (token && publicOnlyPages.includes(pathname)) {
+        return NextResponse.redirect(new URL("/profile", request.url));
+    }
+
+    // If the user tries to access protected pages without being logged in, redirect them to signin page
+    if (!token && !publicOnlyPages.includes(pathname)) {
         return NextResponse.redirect(new URL("/signin", request.url));
     }
 
@@ -24,5 +34,12 @@ export function middleware(request) {
 }
 
 export const config = {
-    matcher: ["/profile", "/routine", "/updateneeds", "/weeklyschedule"],
+    matcher: [
+        "/profile",
+        "/routine",
+        "/updateneeds",
+        "/weeklyschedule",
+        "/signup",
+        "/signin",
+    ],
 };
