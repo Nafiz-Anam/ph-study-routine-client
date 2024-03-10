@@ -7,7 +7,7 @@ import {
     useUpdateUserProfileMutation,
 } from "@/redux/services/userApi";
 import toast from "react-hot-toast";
-import ImageUploader from "../imageUploader";
+import ImageUploader from "@/components/imageUploader";
 
 const ProfileForm = () => {
     const {
