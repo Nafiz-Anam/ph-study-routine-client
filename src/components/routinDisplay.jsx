@@ -21,7 +21,7 @@ const RoutineDisplay = () => {
 
     return (
         <section className="flex flex-col items-center min-h-screen mx-auto py-10 max-w-7xl sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4 capitalize">
                 Comprehensive study plan of the week
             </h2>
             <div className="grid grid-cols-1 pt-5 md:grid-cols-2 lg:grid-cols-3 gap-6">

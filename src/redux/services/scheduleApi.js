@@ -16,6 +16,7 @@ export const scheduleApi = createApi({
             return headers;
         },
     }),
+    tagTypes: ["StudyPlan"],
     endpoints: (builder) => ({
         getInitialSchedule: builder.query({
             query: () => "/schedule/initial",
@@ -26,6 +27,7 @@ export const scheduleApi = createApi({
                 method: "POST",
                 body: initialSchedule,
             }),
+            invalidatesTags: ["StudyPlan"],
         }),
     }),
 });

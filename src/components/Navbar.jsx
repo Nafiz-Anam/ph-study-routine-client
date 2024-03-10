@@ -22,8 +22,8 @@ const Navbar = () => {
 
     const navItems = [
         { key: "1", label: "My Profile", href: "/profile" },
-        { key: "2", label: "Incomplete Tasks", href: "/updateneeds" },
-        { key: "3", label: "Block Timelog", href: "/weeklyschedule" },
+        { key: "2", label: "Block Timelog", href: "/weeklyschedule" },
+        { key: "3", label: "Incomplete Tasks", href: "/updateneeds" },
         { key: "4", label: "Generated Routine", href: "/routine" },
     ];
 
@@ -41,7 +41,7 @@ const Navbar = () => {
             <div className="flex items-center justify-between px-10 max-w-screen-2xl mx-auto">
                 <div className="flex items-center gap-3">
                     <span
-                        className="text-xl font-bold cursor-pointer"
+                        className="text-xl font-bold cursor-pointer bg-indigo-600 text-white py-1 px-3 rounded-ss-3xl rounded-br-3xl"
                         onClick={() => router.push("/")}
                     >
                         Study Planner

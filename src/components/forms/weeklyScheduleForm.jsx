@@ -84,8 +84,8 @@ const WeeklyScheduleForm = () => {
                 onSubmit={handleSubmit(onSubmit)}
                 className="space-y-6 w-full"
             >
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                    Update your weekly block time slots
+                <h2 className="text-2xl font-bold text-gray-900 mb-4 capitalize text-center">
+                    Update your weekly blocked time slots
                 </h2>
                 {fields.map((field, dayIndex) => (
                     <div key={field.id} className="space-y-4">

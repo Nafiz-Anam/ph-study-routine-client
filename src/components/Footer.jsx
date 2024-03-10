@@ -4,7 +4,10 @@ const Footer = () => {
             <div className="max-w-6xl mx-auto px-4 py-10 md:py-12">
                 <div className="md:flex md:justify-between">
                     <div className="mb-6 md:mb-0">
-                        <a href="#" className="text-2xl font-bold">
+                        <a
+                            href="#"
+                            className="text-2xl font-bold  rounded-ss-3xl rounded-br-3xl bg-white py-2 px-3 text-gray-800"
+                        >
                             Study Planner
                         </a>
                     </div>
