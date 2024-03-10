@@ -114,7 +114,7 @@ const WeeklyScheduleForm = () => {
                                             `weeklySchedule.${dayIndex}.timeBlocks.${blockIndex}.subject`
                                         )}
                                         className="w-full border-gray-300 rounded-md shadow-sm"
-                                        placeholder="Subject"
+                                        placeholder="Subject / Location"
                                     />
                                     <button
                                         type="button"
