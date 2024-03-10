@@ -1,6 +1,8 @@
 "use client";
 
 import { useForm } from "react-hook-form";
+import ImageUploader from "../imageUploader";
+import { useState } from "react";
 
 const ProfileForm = () => {
     const {
@@ -11,6 +13,12 @@ const ProfileForm = () => {
     const onSubmit = (data) => console.log(data);
     console.log("errors =>", errors);
 
+    const [selectedImage, setSelectedImage] = useState(null);
+    console.log("selectedImage", selectedImage);
+    const handleImageSelected = (file) => {
+        setSelectedImage(file);
+    };
+
     return (
         <section className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -20,6 +28,12 @@ const ProfileForm = () => {
             </div>
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                    <div className="flex justify-center items-start">
+                        <ImageUploader
+                            defaultImageUrl=""
+                            onImageSelected={handleImageSelected}
+                        />
+                    </div>
                     <div className="flex gap-1">
                         <div>
                             <label
