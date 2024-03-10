@@ -21,7 +21,7 @@ const Navbar = () => {
     };
 
     const navItems = [
-        { key: "1", label: "Profile", href: "/profile" },
+        { key: "1", label: "My Profile", href: "/profile" },
         { key: "2", label: "Incomplete Tasks", href: "/updateneeds" },
         { key: "3", label: "Block Timelog", href: "/weeklyschedule" },
         { key: "4", label: "Generated Routine", href: "/routine" },
