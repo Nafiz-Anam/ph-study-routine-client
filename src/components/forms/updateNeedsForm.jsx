@@ -1,6 +1,8 @@
 "use client";
 
+import { useAddUserNeedsMutation } from "@/redux/services/userApi";
 import { useForm, useFieldArray } from "react-hook-form";
+import toast from "react-hot-toast";
 
 const UpdateNeedsForm = () => {
     const {
@@ -18,7 +20,19 @@ const UpdateNeedsForm = () => {
         name: "needs",
     });
 
-    const onSubmit = (data) => console.log(data);
+    const [addUserNeeds] = useAddUserNeedsMutation();
+
+    const onSubmit = async (data) => {
+        try {
+            await addUserNeeds(data).unwrap();
+            toast.success("Needs updated successfully");
+            console.log("Needs updated successfully");
+            reset();
+        } catch (err) {
+            console.error("Failed to update needs:", err);
+            toast.error("Failed to update needs.");
+        }
+    };
 
     return (
         <section className="flex flex-col items-center pt-10 min-h-screen">

@@ -35,8 +35,10 @@ const WeeklyScheduleForm = () => {
         try {
             await addInitialSchedule(data).unwrap();
             console.log("Schedule updated successfully");
+            toast.success("Schedule updated successfully.");
         } catch (error) {
             console.error("Failed to update the schedule:", error);
+            toast.success("Failed to update the schedule.");
         }
     };
 
