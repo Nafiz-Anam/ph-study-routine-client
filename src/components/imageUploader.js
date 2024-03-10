@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 
 const ImageUploader = ({ defaultImageUrl, onImageSelected }) => {
     const [imagePreview, setImagePreview] = useState(defaultImageUrl);
@@ -37,9 +38,11 @@ const ImageUploader = ({ defaultImageUrl, onImageSelected }) => {
                 style={{ display: "none" }}
             />
             {imagePreview ? (
-                <img
+                <Image
                     src={imagePreview}
-                    alt="Preview"
+                    alt="Profile"
+                    width={150}
+                    height={150}
                     className="w-32 h-32 rounded-full object-cover border-2 border-gray-300"
                 />
             ) : (
