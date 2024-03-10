@@ -4,6 +4,7 @@ import { useAppDispatch } from "@/hooks/reduxHooks";
 import { setCredentials } from "@/redux/features/authSlice";
 import { useLoginUserMutation } from "@/redux/services/authApi";
 import { useForm } from "react-hook-form";
+import Link from "next/link";
 
 const LoginForm = () => {
     const {
@@ -91,12 +92,12 @@ const LoginForm = () => {
                 </form>
                 <p className="mt-10 text-center text-sm text-gray-500">
                     Not a user?{" "}
-                    <a
+                    <Link
                         href="/signup"
                         className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
                     >
                         Sign up now
-                    </a>
+                    </Link>
                 </p>
             </div>
         </section>

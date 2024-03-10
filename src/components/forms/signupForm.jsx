@@ -4,6 +4,7 @@ import { useAppDispatch } from "@/hooks/reduxHooks";
 import { setCredentials } from "@/redux/features/authSlice";
 import { useRegisterUserMutation } from "@/redux/services/authApi";
 import { useForm } from "react-hook-form";
+import Link from "next/link";
 
 const RegisterForm = () => {
     const {
@@ -60,14 +61,6 @@ const RegisterForm = () => {
                             >
                                 Password
                             </label>
-                            <div className="text-sm">
-                                <a
-                                    href="#"
-                                    className="font-semibold text-indigo-600 hover:text-indigo-500"
-                                >
-                                    Forgot password?
-                                </a>
-                            </div>
                         </div>
                         <div className="mt-2">
                             <input
@@ -93,12 +86,12 @@ const RegisterForm = () => {
                 </form>
                 <p className="mt-10 text-center text-sm text-gray-500">
                     Already have an account?{" "}
-                    <a
+                    <Link
                         href="/signin"
                         className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
                     >
                         Sign in now
-                    </a>
+                    </Link>
                 </p>
             </div>
         </section>
