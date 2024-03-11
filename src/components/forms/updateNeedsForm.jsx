@@ -52,7 +52,7 @@ const UpdateNeedsForm = () => {
     return (
         <section className="flex flex-col items-center py-10 min-h-screen">
             <div className="w-full max-w-7xl">
-                <h2 className="text-2xl font-bold text-gray-800 mb-10 text-center">
+                <h2 className="text-2xl font-extrabold text-gray-800 mb-10 text-center">
                     Update Study or Other Incomplete Tasks
                 </h2>
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
