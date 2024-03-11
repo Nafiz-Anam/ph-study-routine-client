@@ -1,9 +1,11 @@
 "use client";
 
+import { useAppDispatch } from "@/hooks/reduxHooks";
 import {
     useAddInitialScheduleMutation,
     useGetInitialScheduleQuery,
 } from "@/redux/services/scheduleApi";
+import { userApi } from "@/redux/services/userApi";
 import React, { useEffect } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -39,6 +41,8 @@ const WeeklyScheduleForm = () => {
         }
     }, [isSuccess, scheduleData]);
 
+    const dispatch = useAppDispatch();
+
     const onSubmit = async (data) => {
         try {
             await addInitialSchedule(data)
@@ -46,6 +50,7 @@ const WeeklyScheduleForm = () => {
                 .then(() => {
                     toast.success("Schedule updated successfully.");
                     refetch();
+                    dispatch(userApi.util.invalidateTags(["Routine"]));
                 })
                 .catch((error) => {
                     toast.error("Failed to update the schedule.");

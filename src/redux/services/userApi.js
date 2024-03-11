@@ -16,7 +16,7 @@ export const userApi = createApi({
         baseUrl: BASE_URL,
         prepareHeaders,
     }),
-    tagTypes: ["StudyPlan"],
+    tagTypes: ["Routine"],
     endpoints: (builder) => ({
         getUserProfile: builder.query({
             query: () => "/user/profile",
@@ -34,14 +34,14 @@ export const userApi = createApi({
                 method: "POST",
                 body: needsData,
             }),
-            invalidatesTags: ["StudyPlan"],
+            invalidatesTags: ["Routine"],
         }),
         getUserNeeds: builder.query({
             query: () => "/user/needs",
         }),
         getStudyPlan: builder.query({
             query: () => "/user/study-plan",
-            providesTags: ["StudyPlan"],
+            providesTags: ["Routine"],
         }),
     }),
 });
