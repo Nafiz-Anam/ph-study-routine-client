@@ -15,19 +15,29 @@ const LoginForm = () => {
         formState: { errors },
     } = useForm();
     console.log("errors =>", errors);
+
     const [loginUser] = useLoginUserMutation();
     const dispatch = useAppDispatch();
     const router = useRouter();
 
     const onSubmit = async (data) => {
         try {
-            const user = await loginUser(data).unwrap();
-            dispatch(setCredentials({ ...user, email: data.email }));
-            toast.success("Logged in successfully.");
-            router.push("/");
-            setTimeout(() => {
-                window.location.reload();
-            }, 500);
+            await loginUser(data)
+                .unwrap()
+                .then((result) => {
+                    dispatch(
+                        setCredentials({ ...result?.data, email: data?.email })
+                    );
+                    toast.success("Logged in successfully.");
+                    router.push("/");
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 500);
+                })
+                .catch((error) => {
+                    toast.error(error?.data?.message || "Failed to login.");
+                    // console.error("Login failed:", err);
+                });
         } catch (err) {
             console.error("Login failed:", err);
             toast.error("Failed to login.");
@@ -57,6 +67,13 @@ const LoginForm = () => {
                                 placeholder="email"
                                 {...register("email", { required: true })}
                             />
+                            {errors.email && (
+                                <p className="text-red-500 text-xs mt-1">
+                                    {errors.email.type === "required"
+                                        ? "Email is required."
+                                        : "Insert a valid email address."}
+                                </p>
+                            )}
                         </div>
                     </div>
 
@@ -68,14 +85,14 @@ const LoginForm = () => {
                             >
                                 Password
                             </label>
-                            <div className="text-sm">
+                            {/* <div className="text-sm">
                                 <a
                                     href="#"
                                     className="font-semibold text-indigo-600 hover:text-indigo-500"
                                 >
                                     Forgot password?
                                 </a>
-                            </div>
+                            </div> */}
                         </div>
                         <div className="mt-2">
                             <input
@@ -84,9 +101,15 @@ const LoginForm = () => {
                                 placeholder="password"
                                 {...register("password", {
                                     required: true,
-                                    min: 5,
                                 })}
                             />
+                            {errors.password && (
+                                <p className="text-red-500 text-xs mt-1">
+                                    {errors.password.type === "required"
+                                        ? "Password is required."
+                                        : "Password must be greater than 6 char. & max 16 char"}
+                                </p>
+                            )}
                         </div>
                     </div>
 

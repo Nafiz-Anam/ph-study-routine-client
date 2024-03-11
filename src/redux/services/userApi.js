@@ -30,14 +30,14 @@ export const userApi = createApi({
         }),
         addUserNeeds: builder.mutation({
             query: (needsData) => ({
-                url: "/user/needs",
+                url: "/user/todo",
                 method: "POST",
                 body: needsData,
             }),
             invalidatesTags: ["Routine"],
         }),
         getUserNeeds: builder.query({
-            query: () => "/user/needs",
+            query: () => "/user/todo",
         }),
         getStudyPlan: builder.query({
             query: () => "/user/study-plan",

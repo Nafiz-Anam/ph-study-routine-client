@@ -22,13 +22,22 @@ const RegisterForm = () => {
 
     const onSubmit = async (data) => {
         try {
-            const result = await registerUser(data).unwrap();
-            dispatch(setCredentials(result));
-            toast.success("User signed up Successfully");
-            router.push("/");
-            console.log("User registered successfully");
+            await registerUser(data)
+                .unwrap()
+                .then((result) => {
+                    dispatch(setCredentials(result?.data));
+                    toast.success("User signed up Successfully");
+                    router.push("/");
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 500);
+                })
+                .catch((error) => {
+                    toast.error(error?.data?.message || "Failed to sign up.");
+                    // console.error("Failed to sign up.", error);
+                });
         } catch (err) {
-            console.error("Error registering the user: ", err);
+            // console.error("Error registering the user: ", err);
             toast.error("Failed to sign up.");
         }
     };
@@ -56,6 +65,13 @@ const RegisterForm = () => {
                                 placeholder="email"
                                 {...register("email", { required: true })}
                             />
+                            {errors.email && (
+                                <p className="text-red-500 text-xs mt-1">
+                                    {errors.email.type === "required"
+                                        ? "Email is required."
+                                        : "Insert a valid email address."}
+                                </p>
+                            )}
                         </div>
                     </div>
 
@@ -75,9 +91,15 @@ const RegisterForm = () => {
                                 placeholder="password"
                                 {...register("password", {
                                     required: true,
-                                    min: 5,
                                 })}
                             />
+                            {errors.password && (
+                                <p className="text-red-500 text-xs mt-1">
+                                    {errors.password.type === "required"
+                                        ? "Password is required."
+                                        : "Password must be greater than 6 char. & max 16 char"}
+                                </p>
+                            )}
                         </div>
                     </div>
 
