@@ -32,7 +32,7 @@ const ProfileForm = () => {
 
     useEffect(() => {
         if (userProfile) {
-            Object.entries(userProfile.profile).forEach(([key, value]) => {
+            Object.entries(userProfile?.data).forEach(([key, value]) => {
                 setValue(key, value);
             });
         }
@@ -58,7 +58,7 @@ const ProfileForm = () => {
         } else {
             formData.append(
                 "profilePicture",
-                userProfile?.profile.profilePicture
+                userProfile?.profile?.profilePicture
             );
         }
 
@@ -70,12 +70,14 @@ const ProfileForm = () => {
                     refetch();
                 })
                 .catch((error) => {
-                    toast.error("Failed to update profile.");
-                    console.error("Update failed", error);
+                    toast.error(
+                        error?.data?.message || "Failed to update profile."
+                    );
+                    // console.error("Update failed", error);
                 });
         } catch (error) {
             toast.error("Failed to update profile.");
-            console.error("Update failed", error);
+            // console.error("Update failed", error);
         }
     };
 
@@ -96,7 +98,7 @@ const ProfileForm = () => {
                             <div className="flex justify-center items-start">
                                 <ImageUploader
                                     defaultImageUrl={
-                                        userProfile?.profile.profilePicture
+                                        userProfile?.data?.profilePicture
                                     }
                                     onImageSelected={handleImageSelected}
                                 />
@@ -114,8 +116,17 @@ const ProfileForm = () => {
                                         className="block w-full mt-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         type="text"
                                         placeholder="f_name"
-                                        {...register("f_name", {})}
+                                        {...register("f_name", {
+                                            required: true,
+                                        })}
                                     />
+                                    {errors.f_name && (
+                                        <p className="text-red-500 text-xs mt-1">
+                                            {errors.f_name.type === "required"
+                                                ? "First name is required."
+                                                : "Insert a valid first name."}
+                                        </p>
+                                    )}
                                 </div>
 
                                 <div>
@@ -133,6 +144,13 @@ const ProfileForm = () => {
                                             required: true,
                                         })}
                                     />
+                                    {errors.l_name && (
+                                        <p className="text-red-500 text-xs mt-1">
+                                            {errors.l_name.type === "required"
+                                                ? "Last name is required."
+                                                : "Insert a valid last name."}
+                                        </p>
+                                    )}
                                 </div>
                             </div>
                             <div className="flex gap-1">
@@ -147,8 +165,17 @@ const ProfileForm = () => {
                                         className="block w-full mt-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         type="text"
                                         placeholder="mobile"
-                                        {...register("mobile", {})}
+                                        {...register("mobile", {
+                                            required: true,
+                                        })}
                                     />
+                                    {errors.mobile && (
+                                        <p className="text-red-500 text-xs mt-1">
+                                            {errors.mobile.type === "required"
+                                                ? "Mobile no. is required."
+                                                : "Insert a valid mobile."}
+                                        </p>
+                                    )}
                                 </div>
 
                                 <div>
@@ -159,13 +186,22 @@ const ProfileForm = () => {
                                         Gender
                                     </label>
                                     <select
-                                        {...register("gender")}
+                                        {...register("gender", {
+                                            required: true,
+                                        })}
                                         className="block w-[190px] mt-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     >
                                         <option value="male">male</option>
                                         <option value="female">female</option>
                                         <option value="other">other</option>
                                     </select>
+                                    {errors.gender && (
+                                        <p className="text-red-500 text-xs mt-1">
+                                            {errors.gender.type === "required"
+                                                ? "Gender is required."
+                                                : "Insert a valid gender."}
+                                        </p>
+                                    )}
                                 </div>
                             </div>
 

@@ -16,7 +16,7 @@ export const userSlice = createSlice({
             .addMatcher(
                 userApi.endpoints.getUserProfile.matchFulfilled,
                 (state, { payload }) => {
-                    state.profile = payload.profile;
+                    state.profile = payload.data;
                 }
             )
             .addMatcher(
