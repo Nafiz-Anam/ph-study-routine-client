@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Study Routine Planner
 
-## Getting Started
+## Project Objectives
 
-First, run the development server:
+The Study Routine Planner is designed to help students effectively manage their study time alongside other commitments such as classes, work, and personal activities. The primary goal is to maximize study effectiveness by allocating study tasks into a weekly schedule based on task priority and available time slots, ensuring a balanced and achievable study plan.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Architecture Overview
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The Study Routine Planner is built on a microservices architecture, utilizing a React-based frontend for user interaction and a Node.js backend for handling the core logic and database interactions. The system calculates available study times by subtracting predefined commitments from a full week's schedule, sorts study tasks by priority and duration, and then allocates these tasks into the calculated available time slots.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Core Algorithm
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+<details>
+<summary>Click to expand the algorithm explanation</summary>
 
-## Learn More
+### Step 1: Calculate Available Time Slots
 
-To learn more about Next.js, take a look at the following resources:
+-   Initially, all days are assumed to be fully available for study.
+-   The algorithm subtracts blocked time slots from the full weekly schedule to calculate available time slots.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Step 2: Consolidate Available Time
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+-   Adjusts the available time slots for each day based on blocked time slots, accurately accounting for busy times.
 
-## Deploy on Vercel
+### Step 3: Sort Tasks by Priority and Duration
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+-   Sorts tasks by priority (high, medium, low) and duration, prioritizing important and shorter tasks.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Step 4: Allocate Tasks to Time Slots
+
+-   Distributes tasks across available days, ensuring no single day is overloaded.
+-   Prioritizes allocation based on task priority and available time, moving unallocated tasks to a review list.
+
+This algorithm ensures a balanced and realistic study schedule, accommodating existing commitments and prioritizing tasks effectively to maximize study time.
+
+</details>
+
+## Backend
+
+-   **Node.js** for the server-side logic, providing a scalable and efficient runtime environment.
+-   **MongoDB** as the database, offering flexible data storage for user profiles, study plans, and progress tracking.
+-   **Express.js** framework to simplify the creation of RESTful API endpoints, facilitating communication between the frontend and backend.
+-   **Authentication and authorization** implemented via **JWT** to ensure secure access to user-specific data.
+
+## Repo Link
+
+[Click](https://github.com/Nafiz-Anam/ph-study-routine-server) or visit here: https://github.com/Nafiz-Anam/ph-study-routine-server
+
+## Frontend
+
+-   **Next.js** for building a user-friendly interface, enabling server-side rendering and static site generation for faster load times.
+-   **React.js** for developing reusable UI components, ensuring a dynamic and responsive user experience.
+-   **Tailwind CSS** for styling, providing a utility-first approach to design with minimal custom CSS.
+-   **Redux Toolkit and RTK Query** for state management, simplifying data fetching, caching, and updating the UI reactively.
+
+## Repo Link
+
+[Click](https://github.com/Nafiz-Anam/ph-study-routine-client) or visit here: https://github.com/Nafiz-Anam/ph-study-routine-client
+
+## Deployment
+
+-   Docker and Docker Compose installed on your system.
+-   Basic knowledge of Docker, Node.js, and React.
+
+## Usage Instructions
+
+1. **Clone the repository**: `git clone https://github.com/Nafiz-Anam/ph-study-planner`
+2. **Install dependencies**:
+    - Backend: `cd server && npm install`
+    - Frontend: `cd client && npm install`
+3. **Start the application**:
+    - Backend: `npm start` within the `/server` directory.
+    - Frontend: `npm run dev` within the `/client` directory.
+4. **Access the application**: Open `http://localhost:3000` in your web browser for **frontend**. And `http://localhost:5000/api/v1` for **backend**.
+
+## API Collection 👇
+
+https://documenter.getpostman.com/view/30501718/2sA2xh1Xnm
