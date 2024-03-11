@@ -37,7 +37,7 @@ const WeeklyScheduleForm = () => {
 
     useEffect(() => {
         if (isSuccess && scheduleData) {
-            reset({ weeklySchedule: scheduleData.weeklySchedule });
+            reset({ weeklySchedule: scheduleData?.data?.weeklySchedule });
         }
     }, [isSuccess, scheduleData]);
 
@@ -53,12 +53,13 @@ const WeeklyScheduleForm = () => {
                     dispatch(userApi.util.invalidateTags(["Routine"]));
                 })
                 .catch((error) => {
-                    toast.error("Failed to update the schedule.");
-                    console.error("Failed to update the schedule:", error);
+                    toast.error(
+                        error?.data?.message || "Failed to update the schedule."
+                    );
+                    // console.error("Failed to update the schedule:", error);
                 });
-            console.log("Schedule updated successfully");
         } catch (error) {
-            console.error("Failed to update the schedule:", error);
+            // console.error("Failed to update the schedule:", error);
             toast.error("Failed to update the schedule.");
         }
     };

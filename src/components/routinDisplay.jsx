@@ -1,4 +1,5 @@
 "use client";
+
 import React from "react";
 import { useGetStudyPlanQuery } from "@/redux/services/userApi";
 import { AiOutlineClockCircle, AiFillInfoCircle } from "react-icons/ai";
@@ -20,6 +21,8 @@ const RoutineDisplay = () => {
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>An error occurred: {error.toString()}</div>;
 
+    console.log(studyPlan);
+
     return (
         <div className="min-h-screen bg-gray-100 py-10">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -31,15 +34,13 @@ const RoutineDisplay = () => {
                         <DaySchedule
                             key={day}
                             day={day}
-                            tasks={studyPlan.studyPlan[day]}
-                            freeTimeSlots={
-                                studyPlan.studyPlan.freeTimeSlots[day]
-                            }
+                            tasks={studyPlan?.data[day]}
+                            freeTimeSlots={studyPlan.data.freeTimeSlots[day]}
                         />
                     ))}
                     <UnallocatedTasks
-                        tasks={studyPlan.studyPlan.unallocatedTasks}
-                        freeTimeSlots={studyPlan.studyPlan.freeTimeSlots}
+                        tasks={studyPlan.data.unallocatedTasks}
+                        freeTimeSlots={studyPlan.data.freeTimeSlots}
                     />
                 </div>
             </div>
@@ -141,7 +142,6 @@ const UnallocatedTasks = ({ tasks, freeTimeSlots }) => (
                             </p>
                         </div>
                     </div>
-                    {/* <TaskItem key={index} task={task} /> */}
                     <div className="mt-2 ml-9 text-sm text-gray-700">
                         <b>Suggestion:</b>{" "}
                         {suggestSplitForTask(task, freeTimeSlots)}
@@ -152,7 +152,7 @@ const UnallocatedTasks = ({ tasks, freeTimeSlots }) => (
     </div>
 );
 
-const suggestSplitForTask = (task, freeTimeSlots) => {
+const suggestSplitForTask = () => {
     return "Check available free time slots to split this task into manageable chunks.";
 };
 

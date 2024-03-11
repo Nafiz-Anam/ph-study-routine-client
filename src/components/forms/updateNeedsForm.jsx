@@ -19,33 +19,36 @@ const UpdateNeedsForm = () => {
     } = useForm();
     const { fields, append, remove } = useFieldArray({
         control,
-        name: "needs",
+        name: "todo",
     });
 
     const [addUserNeeds] = useAddUserNeedsMutation();
     const { data: needsData, isSuccess, refetch } = useGetUserNeedsQuery();
 
     useEffect(() => {
-        if (isSuccess && needsData && needsData.needs) {
-            reset({ needs: needsData.needs });
+        if (isSuccess && needsData && needsData?.data?.todo) {
+            reset({ todo: needsData?.data?.todo });
         }
-    }, [isSuccess, needsData, reset]);
+    }, [isSuccess, needsData]);
 
     const onSubmit = async (data) => {
+        console.log(data);
         try {
             await addUserNeeds(data)
                 .unwrap()
                 .then(() => {
-                    toast.success("Needs updated successfully");
+                    toast.success("Todo tasks updated successfully");
                     refetch();
                 })
                 .catch((error) => {
-                    toast.error("Failed to update needs.");
+                    toast.error(
+                        error?.data?.message || "Failed to update todo."
+                    );
                     console.error("Failed to update needs", error);
                 });
         } catch (err) {
-            console.error("Failed to update needs:", err);
-            toast.error("Failed to update needs.");
+            console.error("Failed to update todo:", err);
+            toast.error("Failed to update todo.");
         }
     };
 
@@ -60,18 +63,18 @@ const UpdateNeedsForm = () => {
                         <div key={field.id} className="flex gap-3 items-end">
                             <input
                                 type="text"
-                                {...register(`needs.${index}.name`)}
+                                {...register(`todo.${index}.name`)}
                                 placeholder="Task Name"
                                 className="flex-1 border-gray-300 p-2 rounded"
                             />
                             <input
                                 type="number"
-                                {...register(`needs.${index}.timeNeeded`)}
+                                {...register(`todo.${index}.timeNeeded`)}
                                 placeholder="Time Needed (min)"
                                 className="border-gray-300 p-2 rounded"
                             />
                             <select
-                                {...register(`needs.${index}.priority`)}
+                                {...register(`todo.${index}.priority`)}
                                 className="border-gray-300 p-2 rounded w-36"
                             >
                                 <option value="high">High</option>
