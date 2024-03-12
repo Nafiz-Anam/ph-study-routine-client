@@ -4,6 +4,8 @@ import React from "react";
 import { useGetStudyPlanQuery } from "@/redux/services/userApi";
 import { AiOutlineClockCircle, AiFillInfoCircle } from "react-icons/ai";
 import { BiTask } from "react-icons/bi";
+import Link from "next/link";
+import RoutineLoader from "./loadings/routine";
 
 const RoutineDisplay = () => {
     const { data: studyPlan, error, isLoading } = useGetStudyPlanQuery();
@@ -18,31 +20,53 @@ const RoutineDisplay = () => {
         "Sunday",
     ];
 
-    if (isLoading) return <div>Loading...</div>;
-    if (error) return <div>An error occurred: {error.toString()}</div>;
-
-    console.log(studyPlan);
-
     return (
         <div className="min-h-screen bg-gray-100 py-10">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 className="text-2xl font-extrabold text-gray-900 mb-10 capitalize text-center">
                     Comprehensive Study Plan of the week
                 </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {daysOfWeek.map((day) => (
-                        <DaySchedule
-                            key={day}
-                            day={day}
-                            tasks={studyPlan?.data[day]}
-                            freeTimeSlots={studyPlan.data.freeTimeSlots[day]}
+                {isLoading ? (
+                    <RoutineLoader />
+                ) : error ? (
+                    <div className="text-center">
+                        <h2>
+                            Please update your <b>Block-Logs</b> and{" "}
+                            <b>Todo tasks</b> to generate the routine.{" "}
+                        </h2>
+                        <div className="flex justify-center items-center gap-5 my-5">
+                            <Link
+                                href="/weeklyschedule"
+                                className="font-semibold leading-6 text-white bg-indigo-600 px-3 py-2 rounded-md hover:bg-indigo-500"
+                            >
+                                Update Block-logs
+                            </Link>
+                            <Link
+                                href="/updateneeds"
+                                className="font-semibold leading-6 border-4 border-indigo-600 px-3 py-1 rounded-md text-indigo-600 hover:text-indigo-500 hover:border-indigo-500"
+                            >
+                                Update todo tasks
+                            </Link>
+                        </div>
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {daysOfWeek.map((day) => (
+                            <DaySchedule
+                                key={day}
+                                day={day}
+                                tasks={studyPlan?.data[day]}
+                                freeTimeSlots={
+                                    studyPlan.data.freeTimeSlots[day]
+                                }
+                            />
+                        ))}
+                        <UnallocatedTasks
+                            tasks={studyPlan.data.unallocatedTasks}
+                            freeTimeSlots={studyPlan.data.freeTimeSlots}
                         />
-                    ))}
-                    <UnallocatedTasks
-                        tasks={studyPlan.data.unallocatedTasks}
-                        freeTimeSlots={studyPlan.data.freeTimeSlots}
-                    />
-                </div>
+                    </div>
+                )}
             </div>
         </div>
     );
